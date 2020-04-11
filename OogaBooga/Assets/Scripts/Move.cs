@@ -34,13 +34,13 @@ public class Move : MonoBehaviour
     if (Input.GetKeyDown(KeyCode.W))
     {
         Vector3 position = this.transform.position;
-        position.y++;
+        position.z++;
         this.transform.position = position;
     }
     if (Input.GetKeyDown(KeyCode.S))
     {
         Vector3 position = this.transform.position;
-        position.y--;
+        position.z--;
         this.transform.position = position;
     }
     }
