@@ -19,28 +19,28 @@ public class Move : MonoBehaviour
         // speed is a Vector3 
         gameObject.transform.Translate(speed);
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
     {
         Vector3 position = this.transform.position;
-        position.x--;
+        position.x -= 0.3f;
         this.transform.position = position;
     }
-    if (Input.GetKeyDown(KeyCode.D))
+    if (Input.GetKey(KeyCode.D))
     {
         Vector3 position = this.transform.position;
-        position.x++;
+        position.x += 0.3f;
         this.transform.position = position;
     }
-    if (Input.GetKeyDown(KeyCode.W))
+    if (Input.GetKey(KeyCode.W))
     {
         Vector3 position = this.transform.position;
-        position.z++;
+        position.z += 0.3f;
         this.transform.position = position;
     }
-    if (Input.GetKeyDown(KeyCode.S))
+    if (Input.GetKey(KeyCode.S))
     {
         Vector3 position = this.transform.position;
-        position.z--;
+        position.z -= 0.3f;
         this.transform.position = position;
     }
     }
