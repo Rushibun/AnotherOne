@@ -17,31 +17,24 @@ public class Move : MonoBehaviour
     {
         // Vector3(x,y,z) = Vector3(0.1,0.0) gives me a vector that is 0.1 units in size
         // speed is a Vector3 
-        gameObject.transform.Translate(speed);
+        Vector3 currentspeed = Vector3.zero;
 
         if (Input.GetKey(KeyCode.A))
     {
-        Vector3 position = this.transform.position;
-        position.x -= 0.3f;
-        this.transform.position = position;
+        currentspeed.x = -speed.x;
     }
     if (Input.GetKey(KeyCode.D))
     {
-        Vector3 position = this.transform.position;
-        position.x += 0.3f;
-        this.transform.position = position;
+        currentspeed.x = speed.x;
     }
     if (Input.GetKey(KeyCode.W))
     {
-        Vector3 position = this.transform.position;
-        position.z += 0.3f;
-        this.transform.position = position;
+        currentspeed.z = -speed.z;
     }
     if (Input.GetKey(KeyCode.S))
     {
-        Vector3 position = this.transform.position;
-        position.z -= 0.3f;
-        this.transform.position = position;
+        currentspeed.z = speed.z;
     }
+    gameObject.transform.Translate(currentspeed * Time.deltaTime);
     }
 }
