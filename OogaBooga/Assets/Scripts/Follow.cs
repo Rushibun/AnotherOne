@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Follow : MonoBehaviour
 {
+    
     public GameObject target;
     public float followDistance;
     public float cameraFollowSpeed = 0.1f;
@@ -28,6 +29,12 @@ public class Follow : MonoBehaviour
         Vector3 cameraTargetPosition = targetPosition + followVector;
 
         transform.position = Vector3.Lerp(transform.position, cameraTargetPosition, cameraFollowSpeed * Time.deltaTime);
+
+        Vector3 targetDir = targetPosition - transform.position;
+        float angle = Vector3.Angle(targetDir, transform.up);
+
+        if (angle < 5.0f)
+            print("close");
         // Lerp = linear interpolation = you're trying to interpolate a point btwn two points
         // y = p1 + (p2 - p1) * t [line eqation], you're trying to find another point inbtwn those points;
         // t = [0~1]; if t = 0, x = p1; if t = 1, x = p2; if 0 < t < 1, x = any point on line

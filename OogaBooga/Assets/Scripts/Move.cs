@@ -5,6 +5,7 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     public Vector3 speed;
+    private Vector3 target = new Vector3(5.0f, 0.0f, 0.0f);
 
     // Start is called before the first frame update
     void Start()
@@ -21,19 +22,19 @@ public class Move : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
     {
-        currentspeed.x = -speed.x;
+        transform.RotateAround(target, Vector3.up, 30 * Time.deltaTime);
     }
     if (Input.GetKey(KeyCode.D))
     {
-        currentspeed.x = speed.x;
+        transform.RotateAround(target, Vector3.down, 30 * Time.deltaTime);
     }
     if (Input.GetKey(KeyCode.W))
     {
-        currentspeed.z = -speed.z;
+        transform.RotateAround(target, Vector3.forward, 30 * Time.deltaTime);
     }
     if (Input.GetKey(KeyCode.S))
     {
-        currentspeed.z = speed.z;
+        transform.RotateAround(target, Vector3.back, 30 * Time.deltaTime);
     }
     gameObject.transform.Translate(currentspeed * Time.deltaTime);
     }
