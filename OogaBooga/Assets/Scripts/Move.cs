@@ -10,8 +10,9 @@ public class Move : MonoBehaviour
     public float turnspeed;
 
     private Rigidbody rb;
-    public float jumpForce = 5.0f;
+    public float jumpForce = 7.0f;
     private bool isJumping = false;
+    public bool isGrounded = true;
 
     // Start is called before the first frame update
     void Start()
@@ -47,13 +48,20 @@ public class Move : MonoBehaviour
     rb.AddForce(transform.forward * currentspeed * Time.deltaTime, ForceMode.Impulse);
 
     // && is and || is or
-    if (Input.GetKeyUp(KeyCode.Space) && !isJumping)
+
+
+    if (Input.GetKeyUp(KeyCode.Space) && isGrounded)
     {
         isJumping = true;
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-    }
-
+        isGrounded = false;
+        if (isJumping == false)
+            {
+                isGrounded = true;
+            }
+        
     rb.angularVelocity = Vector3.zero;
+
     }
+}
 }
