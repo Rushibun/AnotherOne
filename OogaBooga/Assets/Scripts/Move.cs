@@ -49,16 +49,11 @@ public class Move : MonoBehaviour
 
     // && is and || is or
 
-
     if (Input.GetKeyUp(KeyCode.Space) && isGrounded)
     {
         isJumping = true;
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
-        if (isJumping == false)
-            {
-                isGrounded = true;
-            }
         
     rb.angularVelocity = Vector3.zero;
 
