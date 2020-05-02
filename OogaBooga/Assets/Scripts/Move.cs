@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
+    public GameObject bullet;
+    public Transform bulletSpawnpoint;
     public Vector3 speed;
     
     // amount of degrees per second you want to turn
     public float turnspeed;
-
-    private Rigidbody rb;
-    public float jumpForce = 7.0f;
+    public float jumpForce = 10.0f;
+    
     private bool isJumping = false;
-    public bool isGrounded = true;
+    private float currentspeed = 0.0f;
+    private float distancetoGround = 0.0f;
+    private int jumpCount = 0;
+    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        distancetoGround = GetComponent<Collider>().bounds.extents.y;
     }
 
     // Update is called once per frame
@@ -25,7 +30,7 @@ public class Move : MonoBehaviour
     {
     // Vector3(x,y,z) = Vector3(0.1,0.0) gives me a vector that is 0.1 units in size
     // speed is a Vector3 
-    float currentspeed = 0.0f;
+    currentspeed = 0.0f;
     float currentTurnAmount = 0.0f;
 
     if (Input.GetKey(KeyCode.A))
@@ -44,19 +49,41 @@ public class Move : MonoBehaviour
     {
         currentspeed = -speed.x;
     }
-    gameObject.transform.Rotate(Vector3.up, currentTurnAmount * Time.deltaTime);
-    rb.AddForce(transform.forward * currentspeed * Time.deltaTime, ForceMode.Impulse);
-
-    // && is and || is or
-
-    if (Input.GetKeyUp(KeyCode.Space) && isGrounded)
+    if (Input.GetKey(KeyCode.F))
     {
-        isJumping = true;
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        isGrounded = false;
-        
-    rb.angularVelocity = Vector3.zero;
+        GameObject newBullet = GameObject.Instantiate(bullet, bulletSpawnpoint.position, new Quaternion());
+        Rigidbody bulletBody = newBullet.GetComponent<Rigidbody>();
+        bulletBody.AddForce(transform.forward * 30, ForceMode.Impulse);
+    }
+    gameObject.transform.Rotate(Vector3.up, currentTurnAmount * Time.deltaTime);
 
     }
-}
+
+    bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position,Vector3.down, distancetoGround + 0.1f);
+        // return (Mathf.Abs(rb.velocity.y) < Mathf.Epsilon)
+    }
+
+    // && is and || is or
+    void FixedUpdate()
+    {
+        rb.AddForce(transform.forward * currentspeed * Time.deltaTime, ForceMode.Impulse); 
+        
+        bool isGrounded = IsGrounded();
+
+        if (isGrounded)
+        {
+            jumpCount = 0;
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space) && (isGrounded || jumpCount < 2))
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            jumpCount ++;
+        }
+     rb.angularVelocity = Vector3.zero;
+        
+    }
 }
