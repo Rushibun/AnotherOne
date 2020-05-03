@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
         // hint: Time.deltaTime
         if (currentLife >= 3)
         {
-        Destroy(this);
+        Destroy(gameObject);
         }
     }
 }
