@@ -19,9 +19,16 @@ public class Bullet : MonoBehaviour
         currentLife += 1.0F * Time.deltaTime;
         // when 3 seconds pass, delete me
         // hint: Time.deltaTime
-        if (currentLife >= 3)
+        if (currentLife >= lifeSpan)
         {
         Destroy(gameObject);
+        }
+    }
+    private void onCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
         }
     }
 }
