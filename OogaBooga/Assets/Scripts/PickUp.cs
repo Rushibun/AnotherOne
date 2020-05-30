@@ -4,24 +4,16 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    bool pickedUp = false;
     // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
 
-    // Update is called once per frame
-    void Update()
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        
-    }
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("PickUp"))
+        if (other.gameObject.CompareTag("PickUp") && !pickedUp)
         {
-            other.gameObject.SetActive(false);
+            PlayerData data = other.gameObject.GetComponent<PlayerData>();
+            data.ChangeScore();
+            pickedUp = true;
         }
-
     }
 }
